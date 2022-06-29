@@ -1,6 +1,6 @@
 ## 参数说明
 
-### SuperEasyGame Dev
+### PlayGames.MOBI
 
 参数设置位置：`/lib/constant.js`
 
