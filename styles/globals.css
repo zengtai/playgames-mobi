@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  ins {
+    @apply no-underline;
+  }
+}
+
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  height: 0 !important;
+}
+ins.adsbygoogle[data-ad-status="unfilled"] ins[aria-label="Advertisement"] {
+  height: 0 !important;
+  display: none !important;
+}
+
+/* ins.adsbygoogle ins.placeholder {
+  display: none !important;
+}
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  height: 0 !important;
+}
+ins.adsbygoogle[data-ad-status="unfilled"] ins[aria-label="Advertisement"] {
+  display: none !important;
+}
+ins.adsbygoogle[data-ad-status="unfilled"] ins.placeholder {
+  display: block !important;
+} */
