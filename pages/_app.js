@@ -64,7 +64,7 @@ function MyApp({ Component, pageProps }) {
         />
         <link
           rel="icon"
-          href="./brand/favicon.png"
+          href="brand/favicon.png"
           sizes="any"
           type="image/png"
         />

@@ -13,9 +13,9 @@ import { getGames, getCategories } from "../lib/api";
 import Link from "next/link";
 import Image from "../components/Image";
 import Layout from "../components/Layout";
-import { SITE_NAME, HOME_ADS_ID } from "../lib/constants";
+import { SITE_META, ADS_SLOT_ID, FEATURED_GAMES } from "../lib/constants";
 import List from "../components/List";
-import Adsense from "../components/Adsense";
+import Banner from "../components/Banner";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Category from "../components/Category";
 import ListItem from "../components/ListItem";
@@ -43,7 +43,7 @@ export default function Home({ games, newGames, featuredGames, categories }) {
     <>
       <Layout items={categories}>
         <Head>
-          <title>{SITE_NAME} | Play Free Games Online</title>
+          <title>{`${SITE_META.name} | Play Free Games Online`}</title>
         </Head>
         <div className="grow">
           <div className="relative bg-orange-600 md:hidden md:bg-transparent">
@@ -81,10 +81,10 @@ export default function Home({ games, newGames, featuredGames, categories }) {
                   return (index - 2) % 11 == 0 ? (
                     <li
                       key={game.id}
-                      className="md:second:col-auto col-span-2 row-span-2 md:row-auto"
+                      className="col-span-2 row-span-2 md:row-auto md:second:col-auto"
                     >
                       <Link href={`/game/${game.slug}`}>
-                        <a className="group md:delay-50 duration-400 relative block aspect-square overflow-hidden rounded-2xl shadow-md shadow-black/30 transition ease-in-out hover:shadow-lg hover:shadow-black/40 md:hover:origin-bottom md:hover:scale-110">
+                        <a className="md:delay-50 duration-400 group relative block aspect-square overflow-hidden rounded-2xl shadow-md shadow-black/30 transition ease-in-out hover:shadow-lg hover:shadow-black/40 md:hover:origin-bottom md:hover:scale-110">
                           <Image
                             src={game.icon}
                             alt={game.title}
@@ -114,10 +114,10 @@ export default function Home({ games, newGames, featuredGames, categories }) {
                   ) : (
                     <li
                       key={game.id}
-                      className="second:col-span-2 md:second:col-auto second:row-span-2 md:second:row-auto"
+                      className="second:col-span-2 second:row-span-2 md:second:col-auto md:second:row-auto"
                     >
                       <Link href={`/game/${game.slug}`}>
-                        <a className="group md:delay-50 duration-400 relative block aspect-square overflow-hidden rounded-2xl shadow-md shadow-black/30 transition ease-in-out hover:shadow-lg hover:shadow-black/40 md:hover:origin-bottom md:hover:scale-110">
+                        <a className="md:delay-50 duration-400 group relative block aspect-square overflow-hidden rounded-2xl shadow-md shadow-black/30 transition ease-in-out hover:shadow-lg hover:shadow-black/40 md:hover:origin-bottom md:hover:scale-110">
                           <Image
                             src={game.icon}
                             alt={game.title}
@@ -158,15 +158,17 @@ export default function Home({ games, newGames, featuredGames, categories }) {
 
 export const getStaticProps = async () => {
   // const games = await getGames();
-  const games = await getGames();
-  const newGames = await getGames("LATEST", 12);
-  const featuredGames = await getGames("FEATURED_GAMES");
-  const categories = await getCategories();
+  const data = await getGames();
+  const games = data.basicData;
+  const featuredGames = games.filter((game) =>
+    FEATURED_GAMES.includes(game.name)
+  );
+  const categories = data.categories;
 
   return {
     props: {
       games,
-      newGames,
+      newGames: games.slice(0, 12),
       featuredGames,
       categories,
     },

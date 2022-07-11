@@ -1,10 +1,10 @@
 import Layout from "../../components/Layout";
 import List from "../../components/List";
 import { useRouter } from "next/router";
-import { getGamesByCategory, getCategories } from "../../lib/api";
+import { getGames } from "../../lib/api";
 import Head from "next/head";
-import { SITE_NAME, CAT_ADS_ID } from "../../lib/constants";
-import Adsense from "../../components/Adsense";
+import { SITE_META, ADS_SLOT_ID } from "../../lib/constants";
+import Banner from "../../components/Banner";
 
 export default function GamesListByCategory({ games, categories }) {
   // console.log(games);
@@ -19,7 +19,7 @@ export default function GamesListByCategory({ games, categories }) {
       <Layout items={categories} isOpen>
         <Head>
           <title>
-            {categoryName} Games | Play {categoryName} Games on {SITE_NAME}
+            {`${categoryName} Games | Play ${categoryName} Games on ${SITE_META.name}`}
           </title>
         </Head>
         <div>
@@ -38,8 +38,12 @@ export default function GamesListByCategory({ games, categories }) {
 }
 
 export async function getStaticProps(context) {
-  const games = await getGamesByCategory(`${context.params.slug}`);
-  const categories = await getCategories();
+  const data = await getGames();
+  // const games = await getGamesByCategory(`${context.params.slug}`);
+  const games = data.basicData.filter(
+    (game) => game.category.toLowerCase() == context.params.slug
+  );
+  const categories = data.categories;
 
   return {
     props: {
@@ -51,14 +55,14 @@ export async function getStaticProps(context) {
 }
 
 export const getStaticPaths = async () => {
-  const categories = await getCategories();
+  const categories = await getGames().then((res) => res.categories);
   const paths = categories.map((category) => ({
     params: {
-      slug: category,
+      slug: category.toLowerCase(),
     },
   }));
   return {
     paths,
-    fallback: "blocking",
+    fallback: false,
   };
 };

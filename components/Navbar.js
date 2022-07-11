@@ -6,8 +6,8 @@ import Image from "./Image";
 import logo from "../public/brand/logo.png";
 import logoSm from "../public/brand/logo-sm.png";
 
-import { SITE_NAME } from "../lib/constants";
-import { getIcon } from "../lib/api";
+import { SITE_META } from "../lib/constants";
+import { getIcon } from "../components/Icons";
 
 export default function Navbar({ items, isOpen }) {
   const router = useRouter();
@@ -18,21 +18,21 @@ export default function Navbar({ items, isOpen }) {
     setMenuOpen(!isMenuOpen);
   }
   // console.log(children);
-  const categoryNav = items.map((category) => {
+  const categoryNav = items.sort().map((category) => {
     return (
       <li
         className={`basis-1/2 transition duration-500 ease-in-out sm:basis-1/4 md:basis-[auto] md:bg-slate-50/0`}
         key={category}
       >
-        <Link href={`/category/${category}`}>
+        <Link href={`/category/${category.toLowerCase()}`}>
           <a
             className={`${
-              category == current.slug
+              category.toLowerCase() == current.slug
                 ? `border-slate-50/80 bg-slate-50/10  opacity-80 md:shadow-lg`
                 : `border-slate-50/20 opacity-50 md:shadow-none`
             } m-2 flex rounded-xl border-2 p-2 text-white hover:bg-slate-50/10 `}
           >
-            <span className="mr-1">{getIcon(category)}</span>
+            {/* <span className="mr-1">{getIcon(category.name)}</span> */}
             {category}
           </a>
         </Link>
@@ -48,7 +48,7 @@ export default function Navbar({ items, isOpen }) {
             <span className="md:hidden">
               <Image
                 src={logo}
-                alt={SITE_NAME}
+                alt={SITE_META.name}
                 width={173}
                 height={54}
                 className="w-full"
@@ -58,7 +58,7 @@ export default function Navbar({ items, isOpen }) {
             <span className="hidden md:block md:h-16 md:w-16">
               <Image
                 src={logoSm}
-                alt={SITE_NAME}
+                alt={SITE_META.name}
                 width={60}
                 height={60}
                 className="w-full"

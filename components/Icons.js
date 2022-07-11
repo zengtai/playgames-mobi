@@ -1,3 +1,17 @@
+export function getIcon(genre) {
+  const categoryIcons = {
+    action: iconAction(),
+    casual: iconCasual(),
+    defense: iconDefense(),
+    puzzles: iconPuzzles(),
+    shooting: iconShooting(),
+    simulation: iconSimulation(),
+    sports: iconSports(),
+    strategy: iconStrategy(),
+  };
+  return categoryIcons[genre];
+}
+
 export const iconFirst = () => {
   return (
     <svg

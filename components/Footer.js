@@ -1,4 +1,4 @@
-import { SITE_NAME } from "../lib/constants";
+import { SITE_META } from "../lib/constants";
 import Link from "next/link";
 import Image from "./Image";
 export default function Footer() {
@@ -14,9 +14,9 @@ export default function Footer() {
       </nav>
       <div className="pb-7 leading-5 opacity-90 md:pt-3">
         <div className="relative mx-auto mb-2 h-[40px] w-[128px]">
-          <Image src={`/brand/logo.png`} alt={SITE_NAME} layout="fill" />
+          <Image src={`/brand/logo.png`} alt={SITE_META.name} layout="fill" />
         </div>
-        Copyright &copy; {new Date().getFullYear()} {SITE_NAME}
+        Copyright &copy; {new Date().getFullYear()} {SITE_META.name}
         <br />
         All Rights Reserved
       </div>
